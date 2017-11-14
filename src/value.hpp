@@ -71,7 +71,7 @@ public:
 private:
 
 	typedef std::vector<Value> ValueVec;
-	typedef std::map<ValueVec, Value> ValueMap;
+	typedef std::map<std::string, Value> ValueMap;
 
 	enum Type {
 		TRUE,
