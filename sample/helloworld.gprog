@@ -1,0 +1,12 @@
+{
+	"nodes": {
+		"text": {
+			"type": "constant",
+			"data": "Hello world!"
+		}
+	},
+	"edges": [
+		["text", "stdout"]
+	]
+}
+
