@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += \
     src/main.cpp \
-    src/network.cpp
+    src/network.cpp \
+    src/networkstate.cpp
 
 HEADERS += \
     src/types.hpp \
@@ -16,5 +17,7 @@ HEADERS += \
     src/value.hpp \
     src/sharedptr.hpp \
     src/refcounted.hpp \
-    src/nodes/stdout.hpp
+    src/nodes/stdout.hpp \
+    src/networkstate.hpp \
+    src/nodes/state.hpp
 

@@ -1,7 +1,9 @@
 #ifndef NODES_NODE_HPP
 #define NODES_NODE_HPP
 
+#include "state.hpp"
 #include "../refcounted.hpp"
+#include "../value.hpp"
 
 #include <set>
 #include <stdexcept>
@@ -9,6 +11,9 @@
 
 namespace Nodes
 {
+
+typedef std::set<Nodes::Node const*> ConstNodeSet;
+typedef std::map<Nodes::Node const*, ValuesVec> ValuesVecsByNode;
 
 class Node : public RefCounted
 {
@@ -38,6 +43,44 @@ public:
 		return 0;
 	}
 
+	// Called by NetworkState
+	virtual bool isInitiallyActive() const
+	{
+		return false;
+	}
+
+	// Called by NetworkState
+	void run(ValuesVec const& inputs, Nodes::ValuesVecsByNode& all_outputs) const
+	{
+		ValuesVec node_outputs(getOutputsSize(), Values());
+		doRunning(inputs, node_outputs);
+		for (unsigned output_i = 0; output_i < node_outputs.size(); ++ output_i) {
+			Values const& output = node_outputs[output_i];
+			if (output.size() > 2) {
+				throw std::runtime_error("Too many values in output #" + std::to_string(output_i));
+			}
+			if (!output.empty()) {
+				Value const& value = output[0];
+				for (Edge const& edge : edges) {
+					if (edge.src_idx == output_i) {
+						Nodes::ValuesVecsByNode::iterator all_outputs_find = all_outputs.find(edge.dest);
+						ValuesVec* dest_inputs;
+						if (all_outputs_find != all_outputs.end()) {
+							dest_inputs = &all_outputs_find->second;
+						} else {
+							all_outputs[edge.dest] = ValuesVec();
+							dest_inputs = &all_outputs[edge.dest];
+						}
+						while (dest_inputs->size() <= edge.dest_idx) {
+							dest_inputs->push_back(Values());
+						}
+						(*dest_inputs)[edge.dest_idx].push_back(value);
+					}
+				}
+			}
+		}
+	}
+
 private:
 
 	struct Edge
@@ -62,9 +105,12 @@ private:
 			return dest_idx < e.dest_idx;
 		}
 	};
+// TODO: Replace with map, where keys are output indexes!
 	typedef std::set<Edge> Edges;
 
 	Edges edges;
+
+	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const = 0;
 };
 
 }

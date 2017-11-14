@@ -19,9 +19,20 @@ public:
 		return 1;
 	}
 
+	virtual bool isInitiallyActive() const
+	{
+		return true;
+	}
+
 private:
 
 	Value val;
+
+	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const
+	{
+		(void)inputs;
+		outputs[0].push_back(val);
+	}
 };
 
 }

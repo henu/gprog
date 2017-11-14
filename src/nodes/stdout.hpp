@@ -4,6 +4,8 @@
 #include "node.hpp"
 #include "../value.hpp"
 
+#include <iostream>
+
 namespace Nodes
 {
 
@@ -19,6 +21,15 @@ public:
 
 private:
 
+	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const
+	{
+		(void)outputs;
+		Values const& values = inputs[0];
+		for (unsigned i = 0; i < values.size(); ++ i) {
+			std::cout << values[i].toString();
+		}
+		std::cout << std::endl;
+	}
 };
 
 }

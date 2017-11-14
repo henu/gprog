@@ -3,6 +3,7 @@
 
 #include "json.hpp"
 #include "nodes/node.hpp"
+#include "nodes/state.hpp"
 #include "sharedptr.hpp"
 
 #include <map>
@@ -13,6 +14,9 @@ class Network
 public:
 
 	Network(JSON const& json);
+
+	// Called by NetworkState
+	void createNodeStates(Nodes::States& nodestates) const;
 
 private:
 

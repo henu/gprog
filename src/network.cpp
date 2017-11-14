@@ -63,3 +63,12 @@ Network::Network(JSON const& json)
 		src->addEdgeTo(dest, src_idx, dest_idx);
 	}
 }
+
+void Network::createNodeStates(Nodes::States& nodestates) const
+{
+	for (NodeMap::const_iterator i = nodes.begin(); i != nodes.end(); ++ i) {
+		Nodes::Node* node = i->second.get();
+		Nodes::State* state = new Nodes::State(node->getInputsSize(), node->getOutputsSize());
+		nodestates[node] = state;
+	}
+}
