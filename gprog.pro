@@ -20,5 +20,6 @@ HEADERS += \
     src/refcounted.hpp \
     src/nodes/stdout.hpp \
     src/networkstate.hpp \
-    src/nodes/state.hpp
+    src/nodes/state.hpp \
+    src/nodes/delay.hpp
 

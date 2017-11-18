@@ -1,6 +1,7 @@
 #include "network.hpp"
 
 #include "nodes/constant.hpp"
+#include "nodes/delay.hpp"
 #include "nodes/stdout.hpp"
 
 Network::Network(JSON const& json)
@@ -23,6 +24,18 @@ Network::Network(JSON const& json)
 			} else {
 				throw std::runtime_error("Only strings are supported for now!");
 			}
+		} else if (node_type == "delay") {
+			int time = 0;
+			if (node_json.contains("time")) {
+				if (!node_json.get("time").isInteger()) {
+					throw std::runtime_error("Delay time must be integer!");
+				}
+				time = node_json.get("time").getInteger();
+				if (time < 0) {
+					throw std::runtime_error("Delay time must be zero or greater!");
+				}
+			}
+			node = new Nodes::Delay(time);
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}
