@@ -33,27 +33,12 @@ public:
 		edges.insert(Edge(dest, src_idx, dest_idx));
 	}
 
-	virtual unsigned getInputsSize() const
-	{
-		return 0;
-	}
-
-	virtual unsigned getOutputsSize() const
-	{
-		return 0;
-	}
+	virtual unsigned getInputsSize() const { return 0; }
+	virtual unsigned getOutputsSize() const { return 0; }
 
 	// Called by State
-	virtual void* initializeStateData() const
-	{
-		return NULL;
-	}
-
-	// Called by State
-	virtual void cleanStateData(void* data) const
-	{
-		(void)data;
-	}
+	virtual void* initializeStateData() const { return NULL; }
+	virtual void cleanStateData(void* data) const { (void)data; }
 
 	// Called by NetworkState
 	virtual bool isActiveWithoutInput(void const* data) const
@@ -63,10 +48,7 @@ public:
 	}
 
 	// Called by NetworkState
-	virtual bool isInitiallyActive() const
-	{
-		return false;
-	}
+	virtual bool isInitiallyActive() const { return false; }
 
 	// Called by NetworkState
 	void run(State* state, ValuesVec const& inputs, Nodes::ValuesVecsByNode& all_outputs) const

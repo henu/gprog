@@ -68,6 +68,29 @@ public:
 		}
 	}
 
+	inline bool toBool() const
+	{
+		switch (type) {
+		case TRUE:
+			return true;
+		case FALSE:
+			return false;
+		case NIL:
+			return true;
+		case INTEGER:
+			return data.i != 0;
+		case FLOAT:
+			return data.f != 0;
+		case VECTOR:
+			return !data.vec->empty();
+		case MAP:
+			return !data.map->empty();
+		case STRING:
+			return !data.str->empty();
+		}
+		return false;
+	}
+
 private:
 
 	typedef std::vector<Value> ValueVec;

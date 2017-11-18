@@ -14,11 +14,11 @@
 		"not": {
 			"type": "not"
 		},
-		"forward if true": {
-			"type": "forward_if_true"
+		"conditional forward": {
+			"type": "conditional_forward"
 		},
 		"newlines": {
-			"type": "output_if_true"
+			"type": "conditional_constant"
 		},
 		"delay 0": {
 			"type": "delay"
@@ -28,10 +28,10 @@
 		["stdin", "splitter"],
 		["splitter", "delay 1"],
 		["splitter", "if space"],
-		["delay 1", "forward if true"],
+		["delay 1", "conditional forward"],
 		["if space", "not"],
 		["if space", "newlines"],
-		["forward if true", "stdout"],
+		["conditional forward", "stdout"],
 		["not", ["forward if true", 1]],
 		["newlines", "delay 0"],
 		["delay 0", "stdout"]
