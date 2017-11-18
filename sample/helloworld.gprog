@@ -2,7 +2,7 @@
 	"nodes": {
 		"text": {
 			"type": "constant",
-			"data": "Hello world!"
+			"value": "Hello world!"
 		}
 	},
 	"edges": [

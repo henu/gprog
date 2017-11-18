@@ -1,6 +1,8 @@
 #ifndef VALUE_HPP
 #define VALUE_HPP
 
+#include "json.hpp"
+
 #include <map>
 #include <string>
 #include <vector>
@@ -22,6 +24,16 @@ public:
 		data.str = new std::string(str);
 	}
 
+	inline Value(JSON const& json)
+	{
+		if (json.isString()) {
+			type = STRING;
+			data.str = new std::string(json.getString());
+		} else {
+			throw std::runtime_error("That JSON to Value conversion is not supported yet!");
+		}
+	}
+
 	inline Value(Value const& val)
 	{
 		copyFrom(val);
@@ -39,6 +51,51 @@ public:
 		return *this;
 	}
 
+	inline bool operator==(Value const& val) const
+	{
+		// Special case. Numbers can be same,
+		// even if they have different types.
+		if (type == INTEGER) {
+			if (val.type == INTEGER) {
+				return data.i == val.data.i;
+			} else if (val.type == FLOAT) {
+				return data.i == val.data.f;
+			}
+		} else if (type == FLOAT) {
+			if (val.type == INTEGER) {
+				return data.f == val.data.i;
+			} else if (val.type == FLOAT) {
+				return data.f == val.data.f;
+			}
+		}
+
+		if (type != val.type) {
+			return false;
+		}
+
+		switch (type) {
+		case TRUE:
+		case FALSE:
+		case NIL:
+			return true;
+		case INTEGER:
+		case FLOAT:
+			// This should not be reached
+			return false;
+		case VECTOR:
+			return *data.vec == *val.data.vec;
+		case MAP:
+			return *data.map == *val.data.map;
+		case STRING:
+			return *data.str == *val.data.str;
+		}			return *data.vec == *val.data.vec;
+
+	}
+
+	inline bool operator!=(Value const& val) const
+	{
+		return !(*this == val);
+	}
 
 	inline std::string toString() const
 	{

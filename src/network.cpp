@@ -21,12 +21,10 @@ Network::Network(JSON const& json)
 		if (node_type == "conditional_forward") {
 			node = new Nodes::ConditionalForward();
 		} else if (node_type == "constant") {
-			JSON const& data = node_json.get("data");
-			if (data.isString()) {
-				node = new Nodes::Constant(data.getString());
-			} else {
-				throw std::runtime_error("Only strings are supported for now!");
+			if (!node_json.contains("value")) {
+				throw std::runtime_error("constant node \"" + node_name + "\" is missing value!");
 			}
+			node = new Nodes::Constant(Value(node_json.get("value")));
 		} else if (node_type == "delay") {
 			int time = 0;
 			if (node_json.contains("time")) {

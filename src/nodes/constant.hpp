@@ -12,7 +12,7 @@ class Constant : public Node
 
 public:
 
-	inline Constant(std::string const& str) : val(str) { }
+	inline Constant(Value const& val) : val(val) { }
 
 	virtual unsigned getOutputsSize() const
 	{
