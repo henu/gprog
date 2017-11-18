@@ -1,0 +1,40 @@
+{
+	"nodes": {
+		"splitter": {
+			"type": "splitter"
+		},
+		"delay 1": {
+			"type": "delay",
+			"time": 1
+		},
+		"if space": {
+			"type": "if_equal",
+			"value": " "
+		},
+		"not": {
+			"type": "not"
+		},
+		"forward if true": {
+			"type": "forward_if_true"
+		},
+		"newlines": {
+			"type": "output_if_true"
+		},
+		"delay 0": {
+			"type": "delay"
+		}
+	},
+	"edges": [
+		["stdin", "splitter"],
+		["splitter", "delay 1"],
+		["splitter", "if space"],
+		["delay 1", "forward if true"],
+		["if space", "not"],
+		["if space", "newlines"],
+		["forward if true", "stdout"],
+		["not", ["forward if true", 1]],
+		["newlines", "delay 0"],
+		["delay 0", "stdout"]
+	]
+}
+
