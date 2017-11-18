@@ -18,7 +18,8 @@
 			"type": "conditional_forward"
 		},
 		"newlines": {
-			"type": "conditional_constant"
+			"type": "conditional_constant",
+			"value": "\n"
 		},
 		"delay 0": {
 			"type": "delay"

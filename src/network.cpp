@@ -1,5 +1,6 @@
 #include "network.hpp"
 
+#include "nodes/conditional_constant.hpp"
 #include "nodes/conditional_forward.hpp"
 #include "nodes/constant.hpp"
 #include "nodes/delay.hpp"
@@ -19,7 +20,12 @@ Network::Network(JSON const& json)
 
 		Nodes::Node* node;
 
-		if (node_type == "conditional_forward") {
+		if (node_type == "conditional_constant") {
+			if (!node_json.contains("value")) {
+				throw std::runtime_error("conditional_constant node \"" + node_name + "\" is missing value!");
+			}
+			node = new Nodes::ConditionalConstant(Value(node_json.get("value")));
+		} else if (node_type == "conditional_forward") {
 			node = new Nodes::ConditionalForward();
 		} else if (node_type == "constant") {
 			if (!node_json.contains("value")) {
