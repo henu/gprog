@@ -106,6 +106,17 @@ public:
 		return !(*this == val);
 	}
 
+	inline bool isTrue() const { return type == TRUE; }
+	inline bool isFalse() const { return type == FALSE; }
+	inline bool isBoolean() const { return isTrue() || isFalse(); }
+	inline bool isNull() const { return type == NIL; }
+	inline bool isInteger() const { return type == INTEGER; }
+	inline bool isFloat() const { return type == FLOAT; }
+	inline bool isNumber() const { return isInteger() || isFloat(); }
+	inline bool isVector() const { return type == VECTOR; }
+	inline bool isMap() const { return type == MAP; }
+	inline bool isString() const { return type == STRING; }
+
 	inline std::string toString() const
 	{
 		switch (type) {
