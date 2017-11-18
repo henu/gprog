@@ -43,6 +43,25 @@ public:
 		return 0;
 	}
 
+	// Called by State
+	virtual void* initializeStateData() const
+	{
+		return NULL;
+	}
+
+	// Called by State
+	virtual void cleanStateData(void* data) const
+	{
+		(void)data;
+	}
+
+	// Called by NetworkState
+	virtual bool isActiveWithoutInput(void const* data) const
+	{
+		(void)data;
+		return false;
+	}
+
 	// Called by NetworkState
 	virtual bool isInitiallyActive() const
 	{
@@ -50,10 +69,10 @@ public:
 	}
 
 	// Called by NetworkState
-	void run(ValuesVec const& inputs, Nodes::ValuesVecsByNode& all_outputs) const
+	void run(State* state, ValuesVec const& inputs, Nodes::ValuesVecsByNode& all_outputs) const
 	{
 		ValuesVec node_outputs(getOutputsSize(), Values());
-		doRunning(inputs, node_outputs);
+		doRunning(state, inputs, node_outputs);
 		for (unsigned output_i = 0; output_i < node_outputs.size(); ++ output_i) {
 			Values const& output = node_outputs[output_i];
 			if (output.size() > 2) {
@@ -110,7 +129,7 @@ private:
 
 	Edges edges;
 
-	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const = 0;
+	virtual void doRunning(State* state, ValuesVec const& inputs, ValuesVec& outputs) const = 0;
 };
 
 }

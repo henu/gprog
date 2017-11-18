@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += \
     src/main.cpp \
     src/network.cpp \
-    src/networkstate.cpp
+    src/networkstate.cpp \
+    src/nodes/state.cpp
 
 HEADERS += \
     src/types.hpp \

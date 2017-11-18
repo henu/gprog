@@ -21,7 +21,7 @@ Network::Network(JSON const& json)
 			if (data.isString()) {
 				node = new Nodes::Constant(data.getString());
 			} else {
-				throw std::runtime_error("Node \"" + node_name + "\" has unsupported data!");
+				throw std::runtime_error("Only strings are supported for now!");
 			}
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
@@ -68,7 +68,7 @@ void Network::createNodeStates(Nodes::States& nodestates) const
 {
 	for (NodeMap::const_iterator i = nodes.begin(); i != nodes.end(); ++ i) {
 		Nodes::Node* node = i->second.get();
-		Nodes::State* state = new Nodes::State(node->getInputsSize(), node->getOutputsSize());
+		Nodes::State* state = new Nodes::State(node);
 		nodestates[node] = state;
 	}
 }

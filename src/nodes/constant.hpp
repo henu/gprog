@@ -28,8 +28,9 @@ private:
 
 	Value val;
 
-	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const
+	virtual void doRunning(State* state, ValuesVec const& inputs, ValuesVec& outputs) const
 	{
+		(void)state;
 		(void)inputs;
 		outputs[0].push_back(val);
 	}

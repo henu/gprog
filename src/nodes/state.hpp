@@ -17,11 +17,8 @@ class State : public RefCounted
 
 public:
 
-	inline State(unsigned inputs_size, unsigned outputs_size)
-	{
-		inputs.assign(inputs_size, Values());
-(void)outputs_size;
-	}
+	State(Node const* node);
+	virtual ~State();
 
 	inline void getAndClearInputs(ValuesVec& result)
 	{
@@ -44,9 +41,16 @@ public:
 		}
 	}
 
+	// Called by Node and NetworkState
+	inline void* getData() { return data; }
+
 private:
 
+	Node const* node;
+
 	ValuesVec inputs;
+
+	void* data;
 };
 
 typedef std::map<Node const*, SharedPtr<State> > States;

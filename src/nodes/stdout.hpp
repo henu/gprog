@@ -21,8 +21,9 @@ public:
 
 private:
 
-	virtual void doRunning(ValuesVec const& inputs, ValuesVec& outputs) const
+	virtual void doRunning(State* state, ValuesVec const& inputs, ValuesVec& outputs) const
 	{
+		(void)state;
 		(void)outputs;
 		Values const& values = inputs[0];
 		for (unsigned i = 0; i < values.size(); ++ i) {

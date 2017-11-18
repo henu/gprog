@@ -2,6 +2,7 @@
 #define SHAREDPTR_HPP
 
 #include <cassert>
+#include <cstddef>
 
 template<class T> class SharedPtr
 {
