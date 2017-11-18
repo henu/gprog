@@ -1,5 +1,6 @@
 #include "network.hpp"
 
+#include "nodes/conditional_forward.hpp"
 #include "nodes/constant.hpp"
 #include "nodes/delay.hpp"
 #include "nodes/stdout.hpp"
@@ -17,7 +18,9 @@ Network::Network(JSON const& json)
 
 		Nodes::Node* node;
 
-		if (node_type == "constant") {
+		if (node_type == "conditional_forward") {
+			node = new Nodes::ConditionalForward();
+		} else if (node_type == "constant") {
 			JSON const& data = node_json.get("data");
 			if (data.isString()) {
 				node = new Nodes::Constant(data.getString());

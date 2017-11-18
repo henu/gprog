@@ -21,5 +21,7 @@ HEADERS += \
     src/nodes/stdout.hpp \
     src/networkstate.hpp \
     src/nodes/state.hpp \
-    src/nodes/delay.hpp
+    src/nodes/delay.hpp \
+    src/nodes/conditional_forward.hpp \
+    src/utils.hpp
 
