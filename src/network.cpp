@@ -68,26 +68,36 @@ Network::Network(JSON const& json)
 
 		// Get source node
 		JSON const& src_json = edge_json.get(0);
-		Nodes::Node* src;
+		std::string src_name;
 		unsigned src_idx;
 		if (src_json.isString()) {
-			src = nodes[src_json.getString()].get();
+			src_name = src_json.getString();
 			src_idx = 0;
 		} else {
-			src = nodes[src_json.get(0).getString()].get();
+			src_name = src_json.get(0).getString();
 			src_idx = src_json.get(1).getInteger();
 		}
+		NodeMap::iterator nodes_find = nodes.find(src_name);
+		if (nodes_find == nodes.end()) {
+			throw std::runtime_error("Unknown edge source \"" + src_name + "\"!");
+		}
+		Nodes::Node* src = nodes_find->second.get();
 
 		// Get destination node
-		Nodes::Node* dest;
+		std::string dest_name;
 		unsigned dest_idx;
 		if (dest_json.isString()) {
-			dest = nodes[dest_json.getString()].get();
+			dest_name = dest_json.getString();
 			dest_idx = 0;
 		} else {
-			dest = nodes[dest_json.get(0).getString()].get();
+			dest_name = dest_json.get(0).getString();
 			dest_idx = dest_json.get(1).getInteger();
 		}
+		nodes_find = nodes.find(dest_name);
+		if (nodes_find == nodes.end()) {
+			throw std::runtime_error("Unknown edge destination \"" + dest_name + "\"!");
+		}
+		Nodes::Node* dest = nodes_find->second.get();
 
 		src->addEdgeTo(dest, src_idx, dest_idx);
 	}
