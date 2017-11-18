@@ -20,7 +20,8 @@ public:
 		OBJECT,
 		ARRAY,
 		STRING,
-		NUMBER,
+		INTEGER,
+		FLOAT,
 		TRUE,
 		FALSE,
 		NIL
@@ -96,8 +97,8 @@ public:
 
 	inline long getInteger() const
 	{
-		if (type != NUMBER) {
-			throw std::runtime_error("Not a number!");
+		if (type != INTEGER) {
+			throw std::runtime_error("Not an integer!");
 		}
 		return num_i;
 	}
@@ -113,15 +114,9 @@ public:
 		}
 	}
 
-	inline bool isNull() const
-	{
-		return type == NIL;
-	}
-
-	inline bool isString() const
-	{
-		return type == STRING;
-	}
+	inline bool isNull() const { return type == NIL; }
+	inline bool isString() const { return type == STRING; }
+	inline bool isInteger() const { return type == INTEGER; }
 
 	inline std::string firstKey() const
 	{
@@ -264,8 +259,6 @@ private:
 		}
 		// Number
 		else if ((*it >= '0' && *it <= '9') || *it == '-') {
-			type = NUMBER;
-
 			// Read to string first
 			std::string number_s;
 			bool dot_found = false;
@@ -296,11 +289,11 @@ private:
 
 			// Convert to number
 			if (!dot_found) {
+				type = INTEGER;
 				num_i = strtol(number_s.c_str(), NULL, 10);
-				num = num_i;
 			} else {
+				type = FLOAT;
 				num = strtof(number_s.c_str(), NULL);
-				num_i = round(num);
 			}
 
 		}
