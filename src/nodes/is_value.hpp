@@ -2,7 +2,6 @@
 #define NODES_ISVALUE_HPP
 
 #include "node.hpp"
-#include "../value.hpp"
 
 namespace Nodes
 {

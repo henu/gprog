@@ -5,6 +5,7 @@
 #include "nodes/constant.hpp"
 #include "nodes/delay.hpp"
 #include "nodes/is_value.hpp"
+#include "nodes/not.hpp"
 #include "nodes/stdout.hpp"
 
 Network::Network(JSON const& json)
@@ -49,6 +50,8 @@ Network::Network(JSON const& json)
 				throw std::runtime_error("is_value node \"" + node_name + "\" is missing value!");
 			}
 			node = new Nodes::IsValue(Value(node_json.get("value")));
+		} else if (node_type == "not") {
+			node = new Nodes::Not();
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}
