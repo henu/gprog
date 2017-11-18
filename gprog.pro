@@ -26,5 +26,6 @@ HEADERS += \
     src/utils.hpp \
     src/nodes/is_value.hpp \
     src/nodes/conditional_constant.hpp \
-    src/nodes/not.hpp
+    src/nodes/not.hpp \
+    src/nodes/splitter.hpp
 

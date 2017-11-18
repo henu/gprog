@@ -6,6 +6,7 @@
 #include "nodes/delay.hpp"
 #include "nodes/is_value.hpp"
 #include "nodes/not.hpp"
+#include "nodes/splitter.hpp"
 #include "nodes/stdout.hpp"
 
 Network::Network(JSON const& json)
@@ -52,6 +53,8 @@ Network::Network(JSON const& json)
 			node = new Nodes::IsValue(Value(node_json.get("value")));
 		} else if (node_type == "not") {
 			node = new Nodes::Not();
+		} else if (node_type == "splitter") {
+			node = new Nodes::Splitter();
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}
