@@ -23,5 +23,6 @@ HEADERS += \
     src/nodes/state.hpp \
     src/nodes/delay.hpp \
     src/nodes/conditional_forward.hpp \
-    src/utils.hpp
+    src/utils.hpp \
+    src/nodes/is_value.hpp
 

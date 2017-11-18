@@ -3,6 +3,7 @@
 #include "nodes/conditional_forward.hpp"
 #include "nodes/constant.hpp"
 #include "nodes/delay.hpp"
+#include "nodes/is_value.hpp"
 #include "nodes/stdout.hpp"
 
 Network::Network(JSON const& json)
@@ -37,6 +38,11 @@ Network::Network(JSON const& json)
 				}
 			}
 			node = new Nodes::Delay(time);
+		} else if (node_type == "is_value") {
+			if (!node_json.contains("value")) {
+				throw std::runtime_error("is_value node \"" + node_name + "\" is missing value!");
+			}
+			node = new Nodes::IsValue(Value(node_json.get("value")));
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}

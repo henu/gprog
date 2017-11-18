@@ -12,6 +12,15 @@ class Value
 
 public:
 
+	inline Value(bool b)
+	{
+		if (b) {
+			type = TRUE;
+		} else {
+			type = FALSE;
+		}
+	}
+
 	inline Value(long i) :
 	type(INTEGER)
 	{

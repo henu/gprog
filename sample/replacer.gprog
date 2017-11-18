@@ -8,7 +8,7 @@
 			"time": 1
 		},
 		"if space": {
-			"type": "if_equal",
+			"type": "is_value",
 			"value": " "
 		},
 		"not": {
