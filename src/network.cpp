@@ -1,14 +1,17 @@
 #include "network.hpp"
 
+#include "nodes/and.hpp"
 #include "nodes/conditional_constant.hpp"
 #include "nodes/conditional_forward.hpp"
 #include "nodes/constant.hpp"
 #include "nodes/delay.hpp"
 #include "nodes/is_value.hpp"
 #include "nodes/not.hpp"
+#include "nodes/or.hpp"
 #include "nodes/splitter.hpp"
 #include "nodes/stdin.hpp"
 #include "nodes/stdout.hpp"
+#include "nodes/xor.hpp"
 
 Network::Network(JSON const& json)
 {
@@ -24,7 +27,9 @@ Network::Network(JSON const& json)
 
 		Nodes::Node* node;
 
-		if (node_type == "conditional_constant") {
+		if (node_type == "and") {
+			node = new Nodes::And();
+		} else if (node_type == "conditional_constant") {
 			if (!node_json.contains("value")) {
 				throw std::runtime_error("conditional_constant node \"" + node_name + "\" is missing value!");
 			}
@@ -55,8 +60,12 @@ Network::Network(JSON const& json)
 			node = new Nodes::IsValue(Value(node_json.get("value")));
 		} else if (node_type == "not") {
 			node = new Nodes::Not();
+		} else if (node_type == "or") {
+			node = new Nodes::Or();
 		} else if (node_type == "splitter") {
 			node = new Nodes::Splitter();
+		} else if (node_type == "xor") {
+			node = new Nodes::Xor();
 		} else {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}

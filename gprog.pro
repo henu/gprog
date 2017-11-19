@@ -28,5 +28,8 @@ HEADERS += \
     src/nodes/conditional_constant.hpp \
     src/nodes/not.hpp \
     src/nodes/splitter.hpp \
-    src/nodes/stdin.hpp
+    src/nodes/stdin.hpp \
+    src/nodes/and.hpp \
+    src/nodes/or.hpp \
+    src/nodes/xor.hpp
 
