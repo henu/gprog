@@ -27,9 +27,8 @@ private:
 		(void)outputs;
 		Values const& values = inputs[0];
 		for (unsigned i = 0; i < values.size(); ++ i) {
-			std::cout << values[i].toString();
+			std::cout << values[i].toString() << std::flush;
 		}
-		std::cout << std::endl;
 	}
 };
 

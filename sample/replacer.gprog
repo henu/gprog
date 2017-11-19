@@ -33,7 +33,7 @@
 		["if space", "not"],
 		["if space", "newlines"],
 		["conditional forward", "stdout"],
-		["not", ["forward if true", 1]],
+		["not", ["conditional forward", 1]],
 		["newlines", "delay 0"],
 		["delay 0", "stdout"]
 	]

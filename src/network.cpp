@@ -7,12 +7,14 @@
 #include "nodes/is_value.hpp"
 #include "nodes/not.hpp"
 #include "nodes/splitter.hpp"
+#include "nodes/stdin.hpp"
 #include "nodes/stdout.hpp"
 
 Network::Network(JSON const& json)
 {
 	// Create default nodes
 	nodes["stdout"] = new Nodes::StdOut();
+	nodes["stdin"] = new Nodes::StdIn();
 
 	// Read nodes
 	JSON const& nodes_json = json.get("nodes");
