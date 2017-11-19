@@ -70,7 +70,7 @@ private:
 		statedata->queue[read_pos].clear();
 
 		// Write new inputs to queue
-		statedata->queue[statedata->queue_write_pos];
+		statedata->queue[statedata->queue_write_pos] = inputs[0];
 		statedata->queue_write_pos = (statedata->queue_write_pos + 1) % time;
 	}
 };
