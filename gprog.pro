@@ -7,7 +7,8 @@ SOURCES += \
     src/main.cpp \
     src/network.cpp \
     src/networkstate.cpp \
-    src/nodes/state.cpp
+    src/nodes/state.cpp \
+    src/nodefactory.cpp
 
 HEADERS += \
     src/types.hpp \
@@ -31,5 +32,6 @@ HEADERS += \
     src/nodes/stdin.hpp \
     src/nodes/and.hpp \
     src/nodes/or.hpp \
-    src/nodes/xor.hpp
+    src/nodes/xor.hpp \
+    src/nodefactory.hpp
 

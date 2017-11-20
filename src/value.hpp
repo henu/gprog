@@ -35,7 +35,10 @@ public:
 
 	inline Value(JSON const& json)
 	{
-		if (json.isString()) {
+		if (json.isInteger()) {
+			type = INTEGER;
+			data.i = json.getInteger();
+		} else if (json.isString()) {
 			type = STRING;
 			data.str = new std::string(json.getString());
 		} else {
@@ -117,6 +120,36 @@ public:
 	inline bool isMap() const { return type == MAP; }
 	inline bool isString() const { return type == STRING; }
 
+	inline bool toBool() const
+	{
+		switch (type) {
+		case TRUE:
+			return true;
+		case FALSE:
+			return false;
+		case NIL:
+			return true;
+		case INTEGER:
+			return data.i != 0;
+		case FLOAT:
+			return data.f != 0;
+		case VECTOR:
+			return !data.vec->empty();
+		case MAP:
+			return !data.map->empty();
+		case STRING:
+			return !data.str->empty();
+		}
+		return false;
+	}
+
+	inline long toInteger() const
+	{
+		if (type == INTEGER) return data.i;
+		if (type == FLOAT) return long(data.f);
+		throw std::runtime_error("Not a number!");
+	}
+
 	inline std::string toString() const
 	{
 		switch (type) {
@@ -143,29 +176,6 @@ public:
 			return "";
 
 		}
-	}
-
-	inline bool toBool() const
-	{
-		switch (type) {
-		case TRUE:
-			return true;
-		case FALSE:
-			return false;
-		case NIL:
-			return true;
-		case INTEGER:
-			return data.i != 0;
-		case FLOAT:
-			return data.f != 0;
-		case VECTOR:
-			return !data.vec->empty();
-		case MAP:
-			return !data.map->empty();
-		case STRING:
-			return !data.str->empty();
-		}
-		return false;
 	}
 
 private:

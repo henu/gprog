@@ -1,5 +1,6 @@
 #include "network.hpp"
 
+#include "nodefactory.hpp"
 #include "nodes/and.hpp"
 #include "nodes/conditional_constant.hpp"
 #include "nodes/conditional_forward.hpp"
@@ -19,54 +20,33 @@ Network::Network(JSON const& json)
 	nodes["stdout"] = new Nodes::StdOut();
 	nodes["stdin"] = new Nodes::StdIn();
 
+	NodeFactory::Factories factories = NodeFactory().getFactories();
+
 	// Read nodes
 	JSON const& nodes_json = json.get("nodes");
 	for (std::string node_name = nodes_json.firstKey(); nodes_json.contains(node_name); node_name = nodes_json.nextKey(node_name)) {
 		JSON const& node_json = nodes_json.get(node_name);
 		std::string node_type = node_json.get("type").getString();
 
-		Nodes::Node* node;
-
-		if (node_type == "and") {
-			node = new Nodes::And();
-		} else if (node_type == "conditional_constant") {
-			if (!node_json.contains("value")) {
-				throw std::runtime_error("conditional_constant node \"" + node_name + "\" is missing value!");
-			}
-			node = new Nodes::ConditionalConstant(Value(node_json.get("value")));
-		} else if (node_type == "conditional_forward") {
-			node = new Nodes::ConditionalForward();
-		} else if (node_type == "constant") {
-			if (!node_json.contains("value")) {
-				throw std::runtime_error("constant node \"" + node_name + "\" is missing value!");
-			}
-			node = new Nodes::Constant(Value(node_json.get("value")));
-		} else if (node_type == "delay") {
-			int time = 0;
-			if (node_json.contains("time")) {
-				if (!node_json.get("time").isInteger()) {
-					throw std::runtime_error("Delay time must be integer!");
+		Nodes::Node* node = NULL;
+		for (unsigned i = 0; i < factories.size(); ++ i) {
+			NodeFactory::Factory const& factory = factories[i];
+			if (factory.name == node_type) {
+				// Read arguments
+				Values node_args;
+				for (unsigned j = 0; j < factory.args.size(); ++ j) {
+					NodeFactory::Argument const& arg = factory.args[j];
+					if (node_json.contains(arg.name)) {
+						node_args.push_back(Value(node_json.get(arg.name)));
+					} else if (!arg.optional) {
+						throw std::runtime_error("Node \"" + node_name + "\" of type " + node_type + " is missing argument \"" + arg.name + "\"!");
+					}
 				}
-				time = node_json.get("time").getInteger();
-				if (time < 0) {
-					throw std::runtime_error("Delay time must be zero or greater!");
-				}
+				node = factory.func(node_args);
+				break;
 			}
-			node = new Nodes::Delay(time);
-		} else if (node_type == "is_value") {
-			if (!node_json.contains("value")) {
-				throw std::runtime_error("is_value node \"" + node_name + "\" is missing value!");
-			}
-			node = new Nodes::IsValue(Value(node_json.get("value")));
-		} else if (node_type == "not") {
-			node = new Nodes::Not();
-		} else if (node_type == "or") {
-			node = new Nodes::Or();
-		} else if (node_type == "splitter") {
-			node = new Nodes::Splitter();
-		} else if (node_type == "xor") {
-			node = new Nodes::Xor();
-		} else {
+		}
+		if (node == NULL) {
 			throw std::runtime_error("Unsupported node type \"" + node_type + "\"!");
 		}
 
