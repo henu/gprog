@@ -4,6 +4,8 @@
 #include "node.hpp"
 
 #include <iostream>
+#include <cstdio>
+#include <unistd.h>
 
 namespace Nodes
 {
@@ -18,7 +20,7 @@ public:
 	virtual bool isActiveWithoutInput(void const* data) const
 	{
 		(void)data;
-		return std::cin.good();
+		return std::cin.good() && !isatty(fileno(stdin));
 	}
 
 	virtual bool isInitiallyActive() const { return true; }
@@ -29,6 +31,11 @@ private:
 	{
 		(void)state;
 		(void)inputs;
+
+		// If terminal, then give up
+		if (isatty(fileno(stdin))) {
+			return;
+		}
 
 		// Read some data from std::cin
 		unsigned const BUF_SIZE = 10000;
