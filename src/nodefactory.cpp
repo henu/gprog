@@ -16,55 +16,75 @@ NodeFactory::NodeFactory()
 	Factory and_factory;
 	and_factory.name = "and";
 	and_factory.func = createAnd;
+	and_factory.inputs = 2;
+	and_factory.outputs = 1;
 	factories.push_back(and_factory);
 
 	Factory conditional_constant_factory;
 	conditional_constant_factory.name = "conditional_constant";
 	conditional_constant_factory.func = createConditionalConstant;
+	conditional_constant_factory.inputs = 1;
+	conditional_constant_factory.outputs = 1;
 	conditional_constant_factory.args.push_back(Argument("value"));
 	factories.push_back(conditional_constant_factory);
 
 	Factory conditional_forward_factory;
 	conditional_forward_factory.name = "conditional_forward";
 	conditional_forward_factory.func = createConditionalForward;
+	conditional_forward_factory.inputs = 2;
+	conditional_forward_factory.outputs = 1;
 	factories.push_back(conditional_forward_factory);
 
 	Factory constant_factory;
 	constant_factory.name = "constant";
 	constant_factory.func = createConstant;
+	constant_factory.inputs = 0;
+	constant_factory.outputs = 1;
 	constant_factory.args.push_back(Argument("value"));
 	factories.push_back(constant_factory);
 
 	Factory delay_factory;
 	delay_factory.name = "delay";
 	delay_factory.func = createDelay;
+	delay_factory.inputs = 1;
+	delay_factory.outputs = 1;
 	delay_factory.args.push_back(Argument("time", true));
 	factories.push_back(delay_factory);
 
 	Factory is_value_factory;
 	is_value_factory.name = "is_value";
 	is_value_factory.func = createIsValue;
+	is_value_factory.inputs = 1;
+	is_value_factory.outputs = 1;
 	is_value_factory.args.push_back(Argument("value"));
 	factories.push_back(is_value_factory);
 
 	Factory not_factory;
 	not_factory.name = "not";
 	not_factory.func = createNot;
+	not_factory.inputs = 1;
+	not_factory.outputs = 1;
 	factories.push_back(not_factory);
 
 	Factory or_factory;
 	or_factory.name = "or";
 	or_factory.func = createOr;
+	or_factory.inputs = 2;
+	or_factory.outputs = 1;
 	factories.push_back(or_factory);
 
 	Factory splitter_factory;
 	splitter_factory.name = "splitter";
 	splitter_factory.func = createSplitter;
+	splitter_factory.inputs = 1;
+	splitter_factory.outputs = 1;
 	factories.push_back(splitter_factory);
 
 	Factory xor_factory;
 	xor_factory.name = "xor";
 	xor_factory.func = createXor;
+	xor_factory.inputs = 2;
+	xor_factory.outputs = 1;
 	factories.push_back(xor_factory);
 }
 

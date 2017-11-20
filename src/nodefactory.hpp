@@ -24,6 +24,7 @@ public:
 	{
 		std::string name;
 		Function func;
+		unsigned inputs, outputs;
 		Arguments args;
 	};
 	typedef std::vector<Factory> Factories;
