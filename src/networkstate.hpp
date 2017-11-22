@@ -14,7 +14,7 @@ public:
 
 	NetworkState(Network const* net);
 
-	void run();
+	void run(unsigned long max_steps = 0);
 
 private:
 

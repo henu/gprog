@@ -14,13 +14,19 @@ net(net)
 	}
 }
 
-void NetworkState::run()
+void NetworkState::run(unsigned long max_steps)
 {
 	ValuesVec inputs;
 	Nodes::ValuesVecsByNode outputs;
 
+	unsigned long steps = 0;
+
 	Nodes::ConstNodeSet new_active_nodes;
 	while (!active_nodes.empty()) {
+
+		if (max_steps > 0) {
+			++ steps;
+		}
 
 		// Go active nodes through
 		for (Nodes::Node const* node : active_nodes) {
@@ -51,5 +57,9 @@ void NetworkState::run()
 		new_active_nodes.swap(active_nodes);
 		new_active_nodes.clear();
 		outputs.clear();
+
+		if (max_steps > 0 && steps >= max_steps) {
+			break;
+		}
 	}
 }
