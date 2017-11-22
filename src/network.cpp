@@ -14,6 +14,10 @@
 #include "nodes/stdout.hpp"
 #include "nodes/xor.hpp"
 
+Network::Network()
+{
+}
+
 Network::Network(JSON const& json)
 {
 	// Create default nodes
@@ -95,6 +99,51 @@ Network::Network(JSON const& json)
 
 		src->addEdgeTo(dest, src_idx, dest_idx);
 	}
+}
+
+void Network::clear()
+{
+	nodes.clear();
+}
+
+void Network::setNode(std::string const& node_name, Nodes::Node* node)
+{
+	nodes[node_name] = node;
+}
+
+void Network::addEdge(std::string const& src, std::string const& dest, unsigned src_idx, unsigned dest_idx)
+{
+	NodeMap::iterator src_find = nodes.find(src);
+	if (src_find == nodes.end()) {
+		throw std::runtime_error("Node \"" + src + "\" not found!");
+	}
+	NodeMap::iterator dest_find = nodes.find(dest);
+	if (dest_find == nodes.end()) {
+		throw std::runtime_error("Node \"" + dest + "\" not found!");
+	}
+	src_find->second->addEdgeTo(dest_find->second.get(), src_idx, dest_idx);
+}
+
+Nodes::Node const* Network::getNode(std::string const& node_name) const
+{
+	NodeMap::const_iterator nodes_find = nodes.find(node_name);
+	if (nodes_find == nodes.end()) {
+		return NULL;
+	}
+	return nodes_find->second.get();
+}
+
+std::string Network::getFirstNodeName() const
+{
+	if (nodes.empty()) return "";
+	return nodes.begin()->first;
+}
+
+std::string Network::getNextNodeName(std::string const& node_name) const
+{
+	NodeMap::const_iterator nodes_find = nodes.upper_bound(node_name);
+	if (nodes_find == nodes.end()) return nodes.rbegin()->first + "_";
+	return nodes_find->first;
 }
 
 void Network::createNodeStates(Nodes::States& nodestates) const
