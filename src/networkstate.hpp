@@ -16,6 +16,8 @@ public:
 
 	void run(unsigned long max_steps = 0);
 
+	Nodes::State const* getState(Nodes::Node const* node) const;
+
 private:
 
 	Network const* net;

@@ -2,7 +2,6 @@
 #define NODES_STDOUT_HPP
 
 #include "node.hpp"
-#include "../value.hpp"
 
 #include <iostream>
 

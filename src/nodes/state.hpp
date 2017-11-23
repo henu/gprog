@@ -41,6 +41,8 @@ public:
 		}
 	}
 
+	inline void const* getData() const { return data; }
+
 	// Called by Node and NetworkState
 	inline void* getData() { return data; }
 

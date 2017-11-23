@@ -63,3 +63,12 @@ void NetworkState::run(unsigned long max_steps)
 		}
 	}
 }
+
+Nodes::State const* NetworkState::getState(Nodes::Node const* node) const
+{
+	Nodes::States::const_iterator nodes_find = nodes.find(node);
+	if (nodes_find != nodes.end()) {
+		return nodes_find->second.get();
+	}
+	return NULL;
+}

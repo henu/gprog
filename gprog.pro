@@ -33,5 +33,6 @@ HEADERS += \
     src/nodes/and.hpp \
     src/nodes/or.hpp \
     src/nodes/xor.hpp \
-    src/nodefactory.hpp
+    src/nodefactory.hpp \
+    src/nodes/capturer.hpp
 
