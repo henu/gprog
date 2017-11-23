@@ -11,7 +11,12 @@ class Delay : public Nodes::Node
 
 public:
 
-	inline Delay(unsigned time = 0) : time(time) { }
+	inline Delay(unsigned time = 0) : time(time)
+	{
+		if (time > 10000) {
+			throw std::runtime_error("Too big delay! Maximum is 10000.");
+		}
+	}
 
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }
