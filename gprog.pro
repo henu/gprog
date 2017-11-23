@@ -3,6 +3,14 @@ CONFIG += console c++11
 CONFIG -= app_bundle
 CONFIG -= qt
 
+QMAKE_CFLAGS_DEBUG += -g -Werror
+QMAKE_CXXFLAGS_DEBUG +=  -g -Werror
+QMAKE_LFLAGS_DEBUG += -g -Werror
+
+QMAKE_CFLAGS_RELEASE += -DNDEBUG -O3 -s
+QMAKE_CXXFLAGS_RELEASE += -DNDEBUG -O3 -s
+QMAKE_LFLAGS_RELEASE += -DNDEBUG -O3 -s
+
 SOURCES += \
     src/main.cpp \
     src/network.cpp \
