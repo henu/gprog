@@ -16,7 +16,8 @@ SOURCES += \
     src/network.cpp \
     src/networkstate.cpp \
     src/nodes/state.cpp \
-    src/nodefactory.cpp
+    src/nodefactory.cpp \
+    src/nodes/node.cpp
 
 HEADERS += \
     src/types.hpp \

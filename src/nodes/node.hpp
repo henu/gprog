@@ -9,6 +9,8 @@
 #include <stdexcept>
 #include <string>
 
+class Network;
+
 namespace Nodes
 {
 
@@ -21,6 +23,8 @@ class Node : public RefCounted
 public:
 
 	virtual ~Node() { }
+
+	virtual Node* clone() const = 0;
 
 	inline void addEdgeTo(Node* dest, unsigned src_idx, unsigned dest_idx)
 	{
@@ -39,6 +43,9 @@ public:
 	// Called by State
 	virtual void* initializeStateData() const { return NULL; }
 	virtual void cleanStateData(void* data) const { (void)data; }
+
+	// Called by Network
+	void cloneEdges(Network const* src_network, Network* cloned_network, std::string const& src_name) const;
 
 	// Called by NetworkState
 	virtual bool isActiveWithoutInput(void const* data) const

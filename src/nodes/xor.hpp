@@ -11,6 +11,8 @@ class Xor : public Node
 
 public:
 
+	virtual Node* clone() const { return new Xor(); }
+
 	virtual unsigned getInputsSize() const { return 2; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

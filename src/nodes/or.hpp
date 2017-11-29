@@ -11,6 +11,8 @@ class Or : public Node
 
 public:
 
+	virtual Node* clone() const { return new Or(); }
+
 	virtual unsigned getInputsSize() const { return 2; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

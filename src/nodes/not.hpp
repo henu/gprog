@@ -11,6 +11,8 @@ class Not : public Node
 
 public:
 
+	virtual Node* clone() const { return new Not(); }
+
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

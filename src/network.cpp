@@ -101,6 +101,21 @@ Network::Network(JSON const& json)
 	}
 }
 
+SharedPtr<Network> Network::clone() const
+{
+	SharedPtr<Network> clone = new Network();
+	// First clone nodes without edges
+	for (auto i : nodes) {
+		clone->nodes[i.first] = i.second->clone();
+	}
+	// Then clone edges
+	for (auto i : nodes) {
+		std::string src = i.first;
+		i.second->cloneEdges(this, clone.get(), i.first);
+	}
+	return clone;
+}
+
 void Network::clear()
 {
 	nodes.clear();
@@ -131,6 +146,16 @@ Nodes::Node const* Network::getNode(std::string const& node_name) const
 		return NULL;
 	}
 	return nodes_find->second.get();
+}
+
+std::string Network::getNodeName(Nodes::Node* node) const
+{
+	for (auto i : nodes) {
+		if (i.second.get() == node) {
+			return i.first;
+		}
+	}
+	throw std::runtime_error("Node could not be found!");
 }
 
 std::string Network::getFirstNodeName() const

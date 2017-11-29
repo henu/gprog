@@ -14,6 +14,8 @@ public:
 
 	inline Constant(Value const& val) : val(val) { }
 
+	virtual Node* clone() const { return new Constant(val); }
+
 	virtual unsigned getOutputsSize() const
 	{
 		return 1;

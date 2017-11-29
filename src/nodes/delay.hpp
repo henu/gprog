@@ -18,6 +18,8 @@ public:
 		}
 	}
 
+	virtual Node* clone() const { return new Delay(time); }
+
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

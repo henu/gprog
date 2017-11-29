@@ -12,6 +12,8 @@ class ConditionalForward : public Nodes::Node
 
 public:
 
+	virtual Node* clone() const { return new ConditionalForward(); }
+
 	virtual unsigned getInputsSize() const { return 2; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

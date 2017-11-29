@@ -15,6 +15,8 @@ class StdIn : public Node
 
 public:
 
+	virtual Node* clone() const { return new StdIn(); }
+
 	virtual unsigned getOutputsSize() const { return 1; }
 
 	virtual bool isActiveWithoutInput(void const* data) const

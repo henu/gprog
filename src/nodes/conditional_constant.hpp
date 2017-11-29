@@ -14,6 +14,8 @@ public:
 
 	ConditionalConstant(Value const& value) : value(value) {}
 
+	virtual Node* clone() const { return new ConditionalConstant(value); }
+
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

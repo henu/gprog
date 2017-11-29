@@ -13,6 +13,8 @@ class StdOut : public Node
 
 public:
 
+	virtual Node* clone() const { return new StdOut(); }
+
 	virtual unsigned getInputsSize() const
 	{
 		return 1;

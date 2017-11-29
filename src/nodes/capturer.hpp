@@ -3,6 +3,8 @@
 
 #include "node.hpp"
 
+#include <cassert>
+
 namespace Nodes
 {
 
@@ -10,6 +12,8 @@ class Capturer : public Node
 {
 
 public:
+
+	virtual Node* clone() const { return new Capturer(); }
 
 	inline std::string getContent(State const* state) const
 	{

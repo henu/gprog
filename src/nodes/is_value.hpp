@@ -13,6 +13,8 @@ public:
 
 	IsValue(Value const& value) : value(value) {}
 
+	virtual Node* clone() const { return new IsValue(value); }
+
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }
 

@@ -3,12 +3,16 @@
 
 #include "node.hpp"
 
+#include <cassert>
+
 namespace Nodes {
 
 class Splitter : public Node
 {
 
 public:
+
+	virtual Node* clone() const { return new Splitter(); }
 
 	virtual unsigned getInputsSize() const { return 1; }
 	virtual unsigned getOutputsSize() const { return 1; }

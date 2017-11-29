@@ -4,17 +4,20 @@
 #include "json.hpp"
 #include "nodes/node.hpp"
 #include "nodes/state.hpp"
+#include "refcounted.hpp"
 #include "sharedptr.hpp"
 
 #include <map>
 
-class Network
+class Network : public RefCounted
 {
 
 public:
 
 	Network();
 	Network(JSON const& json);
+
+	SharedPtr<Network> clone() const;
 
 	void clear();
 
@@ -23,6 +26,7 @@ public:
 	void addEdge(std::string const& src, std::string const& dest, unsigned src_idx = 0, unsigned dest_idx = 0);
 
 	Nodes::Node const* getNode(std::string const& node_name) const;
+	std::string getNodeName(Nodes::Node* node) const;
 
 	// For iterating nodes
 	std::string getFirstNodeName() const;
